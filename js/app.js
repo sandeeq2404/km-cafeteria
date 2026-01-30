@@ -1,10 +1,33 @@
 const categoryBar = document.getElementById("categoryBar");
 const menuContainer = document.getElementById("menuContainer");
 
+// Map category → image
+const categoryImages = {
+  "Hot Beverages": "assets/images/hot.webp",
+  "Fresh Juice": "assets/images/freshjuice.webp",
+  "Falooda Special": "assets/images/falooda.webp",
+  "Ice Cream & Desserts": "assets/images/icecream.webp",
+  "Chat": "assets/images/chat.webp",
+  "Snacks": "assets/images/Snacks.webp",
+  "Fries": "assets/images/fries.webp",
+  "Momos": "assets/images/momos.webp",
+  "Mojito": "assets/images/mojito.webp",
+  "Avil Milk": "assets/images/avil.webp",
+  "Milkshake Special": "assets/images/milkshake.webp",
+  "Toast":"assets/images/toast.webp",
+  "Sandwiches": "assets/images/sandwich.webp",
+  "Burger": "assets/images/burger.webp",
+  "Icecream Shake": "assets/images/icecream.webp",
+  "Monster Shake's": "assets/images/monster.webp",
+  "Cold Coffee": "assets/images/coldcoffee.webp",
+  "Parcel": "assets/images/hot.webp",
+  
+};
+
 // Get unique categories
 const categories = ["ALL", ...new Set(menuData.map(item => item.category))];
 
-// Render categories
+// Render categories bar
 function renderCategories() {
   categoryBar.innerHTML = "";
   categories.forEach((cat, index) => {
@@ -31,16 +54,17 @@ function renderMenu(category) {
       return acc;
     }, {});
 
-    Object.keys(grouped).forEach((cat, index) => {
-      // Category header
-      const header = document.createElement("div");
-      header.className = "category-section-header";
-      header.textContent = cat;
-      header.style.background = index % 2 === 0 ? "#ff7a18" : "#ffffff";
-      header.style.color = index % 2 === 0 ? "#ffffff" : "#ff7a18";
-      menuContainer.appendChild(header);
+    Object.keys(grouped).forEach(cat => {
+      const section = document.createElement("div");
+      section.className = "category-section";
 
-      // Items
+      const header = document.createElement("div");
+      header.className = "category-banner";
+      const img = categoryImages[cat] || "assets/images/default.webp";
+      header.style.backgroundImage = `url(${img})`;
+      header.innerHTML = `<span>${cat}</span>`;
+      section.appendChild(header);
+
       grouped[cat].forEach(item => {
         const div = document.createElement("div");
         div.className = "menu-item";
@@ -48,10 +72,19 @@ function renderMenu(category) {
           <h4>${item.name}</h4>
           <div class="price">₹${item.price}</div>
         `;
-        menuContainer.appendChild(div);
+        section.appendChild(div);
       });
+
+      menuContainer.appendChild(section);
     });
   } else {
+    const banner = document.createElement("div");
+    banner.className = "category-banner single-view";
+    const img = categoryImages[category] || "assets/images/default.webp";
+    banner.style.backgroundImage = `url(${img})`;
+    banner.innerHTML = `<span>${category}</span>`;
+    menuContainer.appendChild(banner);
+
     const filtered = menuData.filter(item => item.category === category);
     filtered.forEach(item => {
       const div = document.createElement("div");
