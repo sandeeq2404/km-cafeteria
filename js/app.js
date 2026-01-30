@@ -1,5 +1,33 @@
 const categoryBar = document.getElementById("categoryBar");
 const menuContainer = document.getElementById("menuContainer");
+const loader = document.getElementById("loader");
+const loaderText = document.getElementById("loaderText");
+
+const quotes = [
+  "Brewing happiness, one cup at a time ☕",
+  "Fresh flavors, fast service.",
+  "Good food is good mood 😋",
+  "Your daily dose of deliciousness.",
+  "Sip. Snack. Smile.",
+  "Where every bite matters.",
+  "Serving warmth and taste.",
+  "Happiness starts with food.",
+  "Freshly made, just for you.",
+  "Taste that makes you return."
+];
+
+// Pick ONE random quote
+const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+loaderText.textContent = randomQuote;
+
+// Hide loader after 3 seconds
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    loader.style.display = "none";
+  }, 3000);
+});
+
+
 
 // Map category → image
 const categoryImages = {
