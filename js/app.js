@@ -23,17 +23,46 @@ function renderCategories() {
 // Render menu items
 function renderMenu(category) {
   menuContainer.innerHTML = "";
-  const filtered = category === "ALL" ? menuData : menuData.filter(item => item.category === category);
 
-  filtered.forEach(item => {
-    const div = document.createElement("div");
-    div.className = "menu-item";
-    div.innerHTML = `
-      <h4>${item.name}</h4>
-      <div class="price">₹${item.price}</div>
-    `;
-    menuContainer.appendChild(div);
-  });
+  if (category === "ALL") {
+    const grouped = menuData.reduce((acc, item) => {
+      if (!acc[item.category]) acc[item.category] = [];
+      acc[item.category].push(item);
+      return acc;
+    }, {});
+
+    Object.keys(grouped).forEach((cat, index) => {
+      // Category header
+      const header = document.createElement("div");
+      header.className = "category-section-header";
+      header.textContent = cat;
+      header.style.background = index % 2 === 0 ? "#ff7a18" : "#ffffff";
+      header.style.color = index % 2 === 0 ? "#ffffff" : "#ff7a18";
+      menuContainer.appendChild(header);
+
+      // Items
+      grouped[cat].forEach(item => {
+        const div = document.createElement("div");
+        div.className = "menu-item";
+        div.innerHTML = `
+          <h4>${item.name}</h4>
+          <div class="price">₹${item.price}</div>
+        `;
+        menuContainer.appendChild(div);
+      });
+    });
+  } else {
+    const filtered = menuData.filter(item => item.category === category);
+    filtered.forEach(item => {
+      const div = document.createElement("div");
+      div.className = "menu-item";
+      div.innerHTML = `
+        <h4>${item.name}</h4>
+        <div class="price">₹${item.price}</div>
+      `;
+      menuContainer.appendChild(div);
+    });
+  }
 }
 
 // Initial render

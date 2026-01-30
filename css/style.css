@@ -84,6 +84,17 @@ header {
   color: #333;
 }
 
+/* Category section headers in ALL view */
+.category-section-header {
+  margin-top: 16px;
+  margin-bottom: 6px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+
 /* Mobile: force 1 item per row */
 @media (max-width: 768px) {
   .menu-container {
